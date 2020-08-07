@@ -61,6 +61,28 @@
           </dd>
         </div>
 
+        <div class="flex mt-3 justify-center items-center" v-if="hasHumidity">
+          <dt class="sr-only">Humidity</dt>
+          <svg
+            class="w-4 h-4 mr-2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+            <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+          </svg>
+          <dd>
+            <span
+              class="px-2 py-1 text-xs leading-4 font-medium rounded-full bg-yellow-800 text-white bg-or"
+              >{{ plant.humidity }}</span
+            >
+          </dd>
+        </div>
+
         <div class="flex mt-3 justify-center items-center" v-if="hasCare">
           <svg
             class="w-4 h-4 mr-2"
@@ -122,11 +144,13 @@ const SUN_MAP = {
   "Indirect Sunlight": "bg-yellow-200",
   Sun: "bg-orange-400"
 };
+
 const WATER_MAP = {
   "1x / week": "bg-blue-200",
   "2x / week": "bg-blue-300",
   "1x / 2 weeks": "bg-blue-100"
 };
+
 export default {
   props: {
     plant: {
@@ -141,14 +165,17 @@ export default {
     hasWater() {
       return this.plant.water?.trim().length > 0;
     },
-    image() {
-      return this.plant.image?.length > 0 ? this.plant.image : defaultImage;
+    hasHumidity() {
+      return this.plant.humidity?.trim().length > 0;
     },
     sunClass() {
       return SUN_MAP[this.plant.sun] ?? "text-teal-800 bg-teal-100";
     },
     waterClass() {
       return WATER_MAP[this.plant.water] ?? "text-teal-800 bg-teal-100";
+    },
+    image() {
+      return this.plant.image?.length > 0 ? this.plant.image : defaultImage;
     },
     joinedAt() {
       return formatDistanceToNow(new Date(this.plant.joinedat), {

@@ -21,6 +21,7 @@ const cols = [
   "scientificname",
   "sun",
   "water",
+  "humidity",
   "care",
   "notes",
   "joinedat",
