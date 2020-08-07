@@ -3,20 +3,24 @@
     <div class="flex-1 flex flex-col p-8">
       <img
         class="w-32 h-32 text-gray-200 flex-shrink-0 mx-auto bg-gray-200 rounded-full"
+        width="128"
+        height="128"
         :src="image"
         :alt="`Picture of ${plant.scientificname}`"
+        loading="lazy"
       />
-      <h3 class="mt-6 text-gray-900 text-sm leading-5 font-medium">
+      <h2 class="mt-6 text-gray-900 text leading-5 font-medium">
         {{ plant.name }}
-      </h3>
+      </h2>
       <dl class="mt-1 flex-grow flex flex-col justify-between">
         <dt class="sr-only">Scientific Name</dt>
-        <dd class="text-gray-500 text-sm leading-5">
+        <dd class="text-gray-500 text-sm italic leading-5">
           {{ plant.scientificname }}
         </dd>
-        <div class="flex mt-3 justify-center items-center">
+        <dt class="sr-only">Sun</dt>
+        <dd class="flex mt-3 justify-center items-center">
           <svg
-            class="w-4 h-4 mr-2"
+            class="flex-none w-4 h-4 mr-2"
             fill="none"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -26,87 +30,90 @@
           >
             <path
               d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-            ></path>
+            />
           </svg>
-          <dt class="sr-only">Sun</dt>
-          <dd>
-            <span
-              class="px-2 py-1 text-xs leading-4 font-medium rounded-full"
-              :class="sunClass"
-              >{{ plant.sun }}</span
-            >
-          </dd>
-        </div>
-        <div class="flex mt-3 justify-center items-center" v-if="hasWater">
-          <dt class="sr-only">Water</dt>
-          <svg
-            class="w-4 h-4 mr-2"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+          <span
+            class="px-2 py-1 text-xs leading-4 font-medium rounded-full"
+            :class="sunClass"
           >
-            <path
-              d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"
-            ></path>
-          </svg>
-          <dd>
+            {{ plant.sun }}
+          </span>
+        </dd>
+
+        <template v-if="hasWater">
+          <dt class="sr-only">Water</dt>
+          <dd class="flex mt-3 justify-center items-center">
+            <svg
+              class="flex-none w-4 h-4 mr-2"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"
+              />
+            </svg>
             <span
               class="px-2 py-1 text-xs leading-4 font-medium rounded-full"
               :class="waterClass"
-              >{{ plant.water }}</span
             >
+              {{ plant.water }}
+            </span>
           </dd>
-        </div>
+        </template>
 
-        <div class="flex mt-3 justify-center items-center" v-if="hasHumidity">
+        <template v-if="hasHumidity">
           <dt class="sr-only">Humidity</dt>
-          <svg
-            class="w-4 h-4 mr-2"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-            <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-          </svg>
-          <dd>
+          <dd class="flex mt-3 justify-center items-center">
+            <svg
+              class="flex-none w-4 h-4 mr-2"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+              <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+            </svg>
             <span
               class="px-2 py-1 text-xs leading-4 font-medium rounded-full bg-yellow-800 text-white bg-or"
-              >{{ plant.humidity }}</span
             >
+              {{ plant.humidity }}
+            </span>
           </dd>
-        </div>
+        </template>
 
-        <div class="flex mt-3 justify-center items-center" v-if="hasCare">
-          <svg
-            class="w-4 h-4 mr-2"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
+        <template v-if="hasCare">
           <dt class="sr-only">Care</dt>
-          <dd>
+          <dd class="flex mt-3 justify-center items-center">
+            <svg
+              class="flex-none w-4 h-4 mr-2"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
             <span
               class="px-2 py-1 text-xs leading-4 font-medium rounded-full text-green-800 bg-green-200"
-              >{{ plant.care }}</span
             >
+              {{ plant.care }}
+            </span>
           </dd>
-        </div>
+        </template>
 
-        <div class="flex mt-3 justify-center items-center">
+        <dt class="sr-only">Joined</dt>
+        <dd class="flex mt-3 justify-center items-center">
           <svg
             class="w-4 h-4 mr-2"
             fill="none"
@@ -118,16 +125,14 @@
           >
             <path
               d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-            ></path>
+            />
           </svg>
-          <dt class="sr-only">Joined</dt>
-          <dd>
-            <span
-              class="px-2 py-1 text-xs leading-4 font-medium rounded-full text-teal-800 bg-teal-100"
-              >Joined {{ joinedAt }}</span
-            >
-          </dd>
-        </div>
+          <span
+            class="px-2 py-1 text-xs leading-4 font-medium rounded-full text-teal-800 bg-teal-100"
+          >
+            Joined {{ joinedAt }}
+          </span>
+        </dd>
       </dl>
     </div>
   </li>
