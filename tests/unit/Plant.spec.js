@@ -10,6 +10,6 @@ describe("Plant.vue", () => {
     const wrapper = shallowMount(Plant, {
       propsData: { plant }
     });
-    expect(wrapper.text()).toMatch(plant);
+    expect(wrapper.text()).toContain(plant.name);
   });
 });
